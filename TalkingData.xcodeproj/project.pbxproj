@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8664F9221EB86D58002A09E4 /* TalkingData.h in Headers */ = {isa = PBXBuildFile; fileRef = 8664F9201EB86D58002A09E4 /* TalkingData.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8664F92C1EB86F0C002A09E4 /* libTalkingData.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8664F92B1EB86F0C002A09E4 /* libTalkingData.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +17,7 @@
 		8664F9211EB86D58002A09E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8664F9291EB86D87002A09E4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8664F92A1EB86DCC002A09E4 /* TalkingData.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = TalkingData.podspec; sourceTree = "<group>"; };
+		8664F92B1EB86F0C002A09E4 /* libTalkingData.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTalkingData.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -23,6 +25,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8664F92C1EB86F0C002A09E4 /* libTalkingData.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				8664F9201EB86D58002A09E4 /* TalkingData.h */,
+				8664F92B1EB86F0C002A09E4 /* libTalkingData.a */,
 				8664F9211EB86D58002A09E4 /* Info.plist */,
 			);
 			path = TalkingData;
@@ -248,6 +252,10 @@
 				INFOPLIST_FILE = TalkingData/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TalkingData",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.svws.TalkingData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -265,6 +273,10 @@
 				INFOPLIST_FILE = TalkingData/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TalkingData",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.svws.TalkingData;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -290,6 +302,7 @@
 				8664F9271EB86D58002A09E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
