@@ -8,6 +8,72 @@
 
 #import <Foundation/Foundation.h>
 
+#if TARGET_OS_IOS
+typedef NS_ENUM(NSUInteger, TDAccountType) {
+    TDAccountTypeAnonymous      = 0,    // 匿名帐户
+    TDAccountTypeRegistered     = 1,    // 显性注册帐户
+    TDAccountTypeSinaWeibo      = 2,    // 新浪微博
+    TDAccountTypeQQ             = 3,    // QQ帐户
+    TDAccountTypeTencentWeibo   = 4,    // 腾讯微博
+    TDAccountTypeND91           = 5,    // 91帐户
+    TDAccountTypeWeiXin         = 6,    // 微信
+    TDAccountTypeType1          = 11,   // 自定义类型1
+    TDAccountTypeType2          = 12,   // 自定义类型2
+    TDAccountTypeType3          = 13,   // 自定义类型3
+    TDAccountTypeType4          = 14,   // 自定义类型4
+    TDAccountTypeType5          = 15,   // 自定义类型5
+    TDAccountTypeType6          = 16,   // 自定义类型6
+    TDAccountTypeType7          = 17,   // 自定义类型7
+    TDAccountTypeType8          = 18,   // 自定义类型8
+    TDAccountTypeType9          = 19,   // 自定义类型9
+    TDAccountTypeType10         = 20    // 自定义类型10
+};
+#endif
+
+
+#if TARGET_OS_IOS
+@interface TalkingDataOrder : NSObject
+
+/**
+ *  @method createOrder
+ *  @param  orderId          订单id         类型:NSString
+ *  @param  total            订单总价        类型:int
+ *  @param  currencyType     币种           类型:NSString
+ */
++ (TalkingDataOrder *)createOrder:(NSString *)orderId total:(int)total currencyType:(NSString *)currencyType;
+
+/**
+ *  @method addItemWithCategory
+ *  @param  itemId           商品Id         类型:NSString
+ *  @param  category         商品类别        类型:NSString
+ *  @param  name             商品名称        类型:NSString
+ *  @param  unitPrice        商品单价        类型:int
+ *  @param  amount           商品数量        类型:int
+ */
+- (TalkingDataOrder *)addItem:(NSString *)itemId category:(NSString *)category name:(NSString *)name unitPrice:(int)unitPrice amount:(int)amount;
+
+@end
+
+
+@interface TalkingDataShoppingCart : NSObject
+
+/**
+ *  @method createShoppingCart
+ */
++ (TalkingDataShoppingCart *)createShoppingCart;
+
+/**
+ *  @method addItem
+ *  @param  itemId           商品Id         类型:NSString
+ *  @param  category         商品类别        类型:NSString
+ *  @param  name             商品名称        类型:NSString
+ *  @param  unitPrice        商品单价        类型:int
+ *  @param  amount           商品数量        类型:int
+ */
+- (TalkingDataShoppingCart *)addItem:(NSString *)itemId category:(NSString *)category name:(NSString *)name unitPrice:(int)unitPrice amount:(int)amount;
+
+@end
+#endif
 
 // 以下枚举用于WatchApp页面追踪
 typedef enum {
@@ -32,10 +98,11 @@ typedef enum {
  */
 + (void)setLogEnabled:(BOOL)enable;
 
+#if TARGET_OS_IOS
 /**
  *  @method setExceptionReportEnabled
  *  是否捕捉程序崩溃记录（可选）
-    如果需要记录程序崩溃日志，请将值设成YES，并且在调用sessionStarted:withChannelId:之前调用此函数
+    如果需要记录程序崩溃日志，请将值设成YES，并且在初始化后尽早调用
  *  @param  enable      默认是 NO
  */
 + (void)setExceptionReportEnabled:(BOOL)enable;
@@ -43,12 +110,14 @@ typedef enum {
 /**
  *  @method setSignalReportEnabled
  *  是否捕捉异常信号（可选）
-    如果需要开启异常信号捕捉功能，请将值设成YES，并且在调用sessionStarted:withChannelId:之前调用此函数
+    如果需要开启异常信号捕捉功能，请将值设成YES，并且在初始化后尽早调用
  *  @param  enable      默认是NO
  */
 + (void)setSignalReportEnabled:(BOOL)enable;
+#endif
 
 
+#if TARGET_OS_IOS
 /**
  *  @method setLatitude:longitude:
  *  设置位置信息（可选）
@@ -56,7 +125,9 @@ typedef enum {
  *  @param  longitude   经度
  */
 + (void)setLatitude:(double)latitude longitude:(double)longitude;
+#endif
 
+#if TARGET_OS_IOS
 /**
  *  @method	sessionStarted:withChannelId:
  *  初始化统计实例，请在application:didFinishLaunchingWithOptions:方法里调用
@@ -64,21 +135,29 @@ typedef enum {
  *  @param  channelId   渠道名，如“app store”（可选）
  */
 + (void)sessionStarted:(NSString *)appKey withChannelId:(NSString *)channelId;
+#endif
+
+
+
+
+#if TARGET_OS_IOS
+/**
+ *  @method onRegister  注册
+ *  @param  accountId   帐户ID
+ *  @param  type        帐户类型
+ *  @param  name        帐户昵称
+ */
++ (void)onRegister:(NSString *)accountId type:(TDAccountType)type name:(NSString *)name;
 
 /**
- *  @method	initWithWatch:
- *  初始化WatchApp统计实例，请在每个入口类的init方法里调用
- *  @param  appKey      应用的唯一标识，统计后台注册得到
+ *  @method onLogin     登录
+ *  @param  accountId   帐户ID
+ *  @param  type        帐户类型
+ *  @param  name        帐户昵称
  */
-+ (void)initWithWatch:(NSString *)appKey;
++ (void)onLogin:(NSString *)accountId type:(TDAccountType)type name:(NSString *)name;
 
-/**
- *	@method	setAntiCheatingEnabled
- *  是否开启反作弊功能
- *	@param 	enable 	默认是开启状态
- */
-+ (void)setAntiCheatingEnabled:(BOOL)enabled;
-
+#endif
 
 /**
  *  @method trackEvent
@@ -148,6 +227,51 @@ typedef enum {
  *  @param  pageName    页面名称，请跟trackPageBegin方法的页面名称保持一致
  */
 + (void)trackPageEnd:(NSString *)pageName;
+
+#if TARGET_OS_IOS
+/**
+ *  @method onPlaceOrder    下单
+ *  @param  accountId       帐号            类型:NSString
+ *  @param  order           订单            类型:TalkingDataOrder
+ */
++ (void)onPlaceOrder:(NSString *)accountId order:(TalkingDataOrder *)order;
+
+/**
+ *  @method onOrderPaySucc  支付
+ *  @param  accountId       帐号            类型:NSString
+ *  @param  payType         支付类型         类型:NSString
+ *  @param  order           订单详情         类型:TalkingDataOrder
+ */
++ (void)onOrderPaySucc:(NSString *)accountId payType:(NSString *)payType order:(TalkingDataOrder *)order;
+
+/**
+ *  @method onViewItem
+ *  @param  itemId           商品Id         类型:NSString
+ *  @param  category         商品类别        类型:NSString
+ *  @param  name             商品名称        类型:NSString
+ *  @param  unitPrice        商品单价        类型:int
+ */
++ (void)onViewItem:(NSString *)itemId category:(NSString *)category name:(NSString *)name unitPrice:(int)unitPrice;
+
+/**
+ *  @method onAddItemToShoppingCart
+ *  @param  itemId           商品Id         类型:NSString
+ *  @param  category         商品类别        类型:NSString
+ *  @param  name             商品名称        类型:NSString
+ *  @param  unitPrice        商品单价        类型:int
+ *  @param  amount           商品数量        类型:int
+ */
++ (void)onAddItemToShoppingCart:(NSString *)itemId category:(NSString *)category name:(NSString *)name unitPrice:(int)unitPrice amount:(int)amount;
+
+/**
+ *  @method onViewShoppingCart
+ *  @param  shoppingCart    购物车信息       类型:TalkingDataShoppingCart
+ */
++ (void)onViewShoppingCart:(TalkingDataShoppingCart *)shoppingCart;
+#endif
+
+
+
 
 
 @end

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'TalkingData'
-  s.version          = '4.0.2'
+  s.version          = '4.0.12'
   s.summary          = 'TalkingDataAnalytics for SVW-SX.'
   s.description      = <<-DESC
                        TalkingDataAnalytics for SVW-SX.
