@@ -138,6 +138,14 @@ typedef enum {
 #endif
 
 
+#if TARGET_OS_IOS
+/**
+ *	@method	setAntiCheatingEnabled
+ *  是否开启反作弊功能
+ *	@param 	enabled 	默认是开启状态
+ */
++ (void)setAntiCheatingEnabled:(BOOL)enabled;
+#endif
 
 
 #if TARGET_OS_IOS
@@ -270,6 +278,21 @@ typedef enum {
 + (void)onViewShoppingCart:(TalkingDataShoppingCart *)shoppingCart;
 #endif
 
+#if TARGET_OS_IOS
+/**
+ *  @method setDeviceToken              设置DeviceToken
+ *  @param  deviceToken                 从Apple获取的DeviceToken
+ */
++ (void)setDeviceToken:(NSData *)deviceToken;
+
+/**
+ *  @method handlePushMessage           处理来自TalkingData的Push消息
+ *  @param  message                     收到的消息
+ *  @return YES                         来自TalkingData的消息，SDK已处理
+ *          NO                          其他来源消息，开发者需自行处理
+ */
++ (BOOL)handlePushMessage:(NSDictionary *)message;
+#endif
 
 
 
